@@ -1,0 +1,312 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CHATTIX — Private Messaging</title>
+
+    <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
+    <link rel="apple-touch-icon" href="./icon-192.png">
+
+    <link rel="stylesheet" href="./style.css">
+    <link rel="manifest" href="./manifest.json">
+
+    <meta name="theme-color" content="#000000">
+    <meta name="description" content="CHATTIX — Connect. Chat. Stay Together.">
+</head>
+
+<body>
+
+    <!-- HOME PAGE -->
+    <div class="app" id="homePage">
+
+        <header class="header">
+            <h2>CHAT<span>TIX</span></h2>
+
+            <div class="header-icons">
+                <button id="newChatBtn" title="Add Friend">＋</button>
+                <button title="Menu">⋮</button>
+            </div>
+        </header>
+
+        <div class="search-box">
+            <input type="text" placeholder="Search username or chat...">
+        </div>
+
+        <div class="tabs">
+            <button class="active">All</button>
+            <button>Unread</button>
+            <button>Friends</button>
+        </div>
+
+        <main class="chat-list">
+
+            <div class="empty-state" id="loginArea">
+                <div class="empty-icon">💬</div>
+                <h3>Welcome to CHATTIX</h3>
+                <p>Your private conversations start here.</p>
+
+                <button class="login-btn" id="googleLoginBtn">
+                    Continue with Google
+                </button>
+
+                <p id="loginMessage"></p>
+            </div>
+
+            <div class="empty-state" id="profileArea" style="display:none;">
+                <img id="userPhoto" src="" alt="Profile"
+                     style="width:80px;height:80px;border-radius:50%;">
+
+                <h3 id="userName"></h3>
+                <p id="userEmail"></p>
+
+                <button class="login-btn" id="logoutBtn">Logout</button>
+            </div>
+
+            <div id="homeFriendsSection" style="display:none;padding:15px;">
+                <h3 style="color:white;margin-bottom:15px;">MY CHATS</h3>
+
+                <div id="homeFriendList">
+                    <p style="color:#aaa;">Your friends will appear here.</p>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- BOTTOM NAVIGATION -->
+        <nav class="bottom-nav">
+            <button class="selected">💬<small>Chats</small></button>
+            <button id="friendsBtn">👥<small>Friends</small></button>
+            <button id="statusBtn">🟢<small>Status</small></button>
+            <button id="settingsBtn">⚙️<small>Settings</small></button>
+        </nav>
+
+    </div>
+
+
+    <!-- SETTINGS PAGE -->
+    <div class="add-friend-page" id="settingsPage" hidden>
+
+        <header class="header">
+            <button id="backSettingsBtn">←</button>
+            <h2>CHATTIX <span>SETTINGS</span></h2>
+        </header>
+
+        <div class="add-friend-content">
+
+            <div style="text-align:center;">
+                <img id="settingsPhoto" src="./icon-192.png"
+                     alt="Profile"
+                     style="width:100px;height:100px;border-radius:50%;object-fit:cover;">
+
+                <br>
+
+                <input type="file" id="settingsPhotoInput"
+                       accept="image/jpeg,image/png,image/webp" hidden>
+
+                <button class="login-btn" id="changePhotoBtn"
+                        type="button" style="margin-top:12px;">
+                    Change Photo
+                </button>
+
+                <h2 id="settingsName" style="margin-top:15px;">My Profile</h2>
+                <p id="settingsEmail"></p>
+            </div>
+
+            <hr style="border-color:#263632;margin:25px 0;">
+
+            <h3>ACCOUNT SETTINGS</h3>
+
+            <button class="login-btn" id="enableNotificationsBtn" type="button">
+                🔔 Enable Notifications
+            </button>
+
+            <p id="notificationMessage"></p>
+
+            <label for="settingsDisplayName">Display Name</label>
+            <input type="text" id="settingsDisplayName"
+                   placeholder="Enter display name">
+
+            <label for="settingsUsername">Username</label>
+            <input type="text" id="settingsUsername"
+                   placeholder="Enter username">
+
+            <label for="settingsBio">Bio</label>
+            <textarea id="settingsBio"
+                      placeholder="Write something about yourself"></textarea>
+
+            <button class="login-btn" id="saveSettingsBtn">
+                Save Changes
+            </button>
+
+            <p id="settingsMessage"></p>
+
+            <button class="login-btn" id="settingsLogoutBtn"
+                    style="margin-top:15px;">
+                Logout
+            </button>
+
+        </div>
+    </div>
+
+
+    <!-- ADD FRIEND PAGE -->
+    <div class="add-friend-page" id="addFriendPage" hidden>
+
+        <header class="header">
+            <button id="backHomeBtn">←</button>
+            <h2>ADD <span>FRIEND</span></h2>
+        </header>
+
+        <div class="add-friend-content">
+
+            <div class="add-friend-icon">👥</div>
+            <h2>Find Your Friends</h2>
+
+            <p>Search people using their CHATTIX username.</p>
+
+            <div class="friend-search-box">
+                <input type="text" id="friendUsername"
+                       placeholder="Enter username e.g. ali_1234">
+
+                <button id="searchFriendBtn">Search</button>
+            </div>
+
+            <div id="friendSearchMessage"></div>
+            <div id="friendSearchResult"></div>
+
+        </div>
+    </div>
+
+
+    <!-- MY FRIENDS PAGE -->
+    <div class="add-friend-page" id="friendsPage" hidden>
+
+        <header class="header">
+            <button id="backFriendsBtn">←</button>
+            <h2>MY <span>FRIENDS</span></h2>
+        </header>
+
+        <div class="add-friend-content">
+
+            <div class="add-friend-icon">👥</div>
+
+            <h2>Friend Requests</h2>
+            <p>People who want to connect with you.</p>
+
+            <div id="incomingRequests">
+                <p>No friend requests yet.</p>
+            </div>
+
+            <hr style="border-color:#263632;margin:25px 0;">
+
+            <h2>My Friends</h2>
+
+            <div id="myFriendsList">
+                <p>No friends added yet.</p>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- STATUS PAGE -->
+    <div class="add-friend-page" id="statusPage" hidden>
+
+        <header class="header">
+            <button id="backStatusBtn">←</button>
+            <h2>CHATTIX <span>STATUS</span></h2>
+        </header>
+
+        <div class="status-content">
+
+            <!-- UPLOAD MY STATUS -->
+            <div class="status-upload-card">
+
+                <h3>＋ Add My Status</h3>
+
+                <p>Share a photo or video with your friends.</p>
+
+                <input
+                    type="file"
+                    id="statusFileInput"
+                    accept="image/jpeg,image/png,image/webp,video/mp4,video/webm"
+                    hidden
+                >
+
+                <input
+                    type="text"
+                    id="statusCaption"
+                    class="status-caption"
+                    maxlength="140"
+                    placeholder="Write a caption (optional)"
+                >
+
+                <button
+                    type="button"
+                    id="chooseStatusBtn"
+                    class="status-file-button"
+                >
+                    Choose Photo or Video
+                </button>
+
+                <p id="statusMessage"></p>
+
+            </div>
+
+            <!-- MY STATUS LIST -->
+            <h3 class="status-section-title">My Status</h3>
+
+            <div id="myStatusList">
+                <p class="status-empty">Your status will appear here.</p>
+            </div>
+
+            <!-- FRIENDS STATUS LIST -->
+            <h3 class="status-section-title">Friends' Updates</h3>
+
+            <div id="friendsStatusList">
+                <p class="status-empty">Your friends' statuses will appear here.</p>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- CHAT PAGE -->
+    <div class="add-friend-page" id="chatPage" hidden>
+
+        <header class="header">
+            <button id="backChatBtn">←</button>
+            <h2 id="chatFriendName">CHAT</h2>
+        </header>
+
+        <div id="chatMessages" class="chat-messages">
+            <p>Start your conversation!</p>
+        </div>
+
+        <div class="chat-input-area">
+
+            <input type="text" id="messageInput"
+                   placeholder="Message...">
+
+            <button type="button" id="sendMessageBtn"
+                    title="Send Message">➤</button>
+
+        </div>
+
+        <!-- Hidden compatibility elements -->
+        <input type="file" id="imageInput" accept="image/*" hidden>
+        <button type="button" id="imageButton" hidden></button>
+        <button type="button" id="voiceButton" hidden></button>
+        <p id="mediaStatus" hidden></p>
+
+    </div>
+
+
+    <!-- FIREBASE APP -->
+    <script type="module" src="./app.js"></script>
+
+</body>
+</html>
